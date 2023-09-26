@@ -88,3 +88,18 @@ END//
 DELIMITER ;
 CALL sp_TitulosPorCategoria('História');
 
+7. 
+DELIMITER //
+CREATE PROCEDURE sp_AdicionarLivro(
+    IN tituloLivro VARCHAR(255),
+    IN editoraID INT,
+    IN anoPublicacao INT,
+    IN numeroPaginas INT,
+    IN categoriaID INT
+)
+BEGIN
+    INSERT INTO Livro (Titulo, Editora_ID, Ano_Publicacao, Numero_Paginas, Categoria_ID)
+    VALUES (tituloLivro, editoraID, anoPublicacao, numeroPaginas, categoriaID);
+END//
+DELIMITER ;
+CALL sp_AdicionarLivro('Novo Livro', 1, 2023, 250, 1);
