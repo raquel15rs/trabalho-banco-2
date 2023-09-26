@@ -125,4 +125,19 @@ END // TERMINA O BLLOCO
 DELIMITER ; TERMINA ESSE BLOCO DE CODIGO AGORA O ; VOLTA A SER O "FINALIZADOR"
 CALL sp_ListarAutores(); ESTA CHAMANDO A STORED.
 
-
+10. 
+DELIMITER //
+CREATE PROCEDURE sp_LivrosESeusAutores()
+BEGIN
+    SELECT
+        Livro.Titulo,
+        CONCAT(Autor.Nome, ' ', Autor.Sobrenome) AS NomeAutor
+    FROM
+        Livro
+    JOIN
+        Autor_Livro ON Livro.Livro_ID = Autor_Livro.Livro_ID
+    JOIN
+        Autor ON Autor_Livro.Autor_ID = Autor.Autor_ID;
+END//
+DELIMITER ;
+CALL sp_LivrosESeusAutores();
