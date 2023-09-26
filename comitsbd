@@ -33,3 +33,25 @@ END //
 DELIMITER ;
 CALL sp_ContarLivrosPorCategoria('Romance', @total);
 SELECT @total;
+
+4. 
+DELIMITER //
+CREATE PROCEDURE sp_VerificarLivrosCategoria(IN categoriaNome VARCHAR(100), OUT possuiLivros BOOLEAN)
+BEGIN
+    DECLARE categoriaID INT;
+    SELECT Categoria_ID INTO categoriaID
+    FROM Categoria
+    WHERE Nome = categoriaNome
+    LIMIT 1;
+    IF categoriaID IS NOT NULL THEN
+        SELECT COUNT(*) INTO possuiLivros
+        FROM Livro
+        WHERE Categoria_ID = categoriaID;
+    ELSE
+        SET possuiLivros = FALSE;
+    END IF;
+END//
+DELIMITER ;
+CALL sp_VerificarLivrosCategoria('Romance', @possuiLivros);
+SELECT @possuiLivros;
+
