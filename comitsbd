@@ -55,3 +55,23 @@ DELIMITER ;
 CALL sp_VerificarLivrosCategoria('Romance', @possuiLivros);
 SELECT @possuiLivros;
 
+5. 
+DELIMITER //
+CREATE PROCEDURE sp_LivrosAteAno(IN anoEspecifico INT)
+BEGIN
+    SELECT
+        Livro.Titulo,
+        Autor.Nome AS NomeAutor,
+        Autor.Sobrenome AS SobrenomeAutor,
+        Livro.Ano_Publicacao
+    FROM
+        Livro
+    JOIN
+        Autor_Livro ON Livro.Livro_ID = Autor_Livro.Livro_ID
+    JOIN
+        Autor ON Autor_Livro.Autor_ID = Autor.Autor_ID
+    WHERE
+        Livro.Ano_Publicacao <= anoEspecifico;
+END//
+DELIMITER ;
+CALL sp_LivrosAteAno(2010);
